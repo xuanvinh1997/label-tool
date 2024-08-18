@@ -1,5 +1,13 @@
 import React, { useState } from "react";
-import { FaBars, FaTimes, FaHome, FaCog } from "react-icons/fa"; // Import icons
+import {
+  FaBars,
+  FaTimes,
+  FaHome,
+  FaCog,
+  FaPlus,
+  FaFile,
+  FaFileUpload,
+} from "react-icons/fa"; // Import icons
 import { OpenDialogOptions, open } from "@tauri-apps/api/dialog";
 
 function Dashboard() {
@@ -61,14 +69,13 @@ function Dashboard() {
           <div className="min-h-screen items-center flex justify-center">
             <div className="grid grid-cols-2 gap-4 w-full">
               <div>
-                <p>Select a data file to get started</p>
                 <button className="btn" onClick={openDialog}>
+                  <FaFileUpload />
                   Select data file
                 </button>
               </div>
               <div>
-                <p>Create new</p>
-                <button className="btn">Create new</button>
+                <CreateNew />
               </div>
             </div>
           </div>
@@ -86,5 +93,48 @@ function Dashboard() {
     </div>
   );
 }
+
+const CreateNew = () => {
+  return (
+    <div>
+      {/* You can open the modal using document.getElementById('ID').showModal() method */}
+      <button
+        className="btn btn-primary"
+        onClick={() => {
+          (
+            document.getElementById("my_modal_4") as HTMLDialogElement
+          )?.showModal();
+        }}
+      >
+        <FaPlus /> Create new
+      </button>
+      <dialog id="my_modal_4" className="modal">
+        <div className="modal-box w-11/12 max-w-5xl flex flex-col">
+          <h3 className="font-bold text-lg">Create new dataset</h3>
+          <div className="flex flex-col justify-between gap-2">
+            <label>Name:</label>
+            <input type="text" className="input input-primary" />
+            <label>Description:</label>
+            <textarea className="textarea textarea-primary" />
+            <label>Format:</label>
+            <select className="select select-primary">
+              <option selected>JSON (Recommend)</option>
+              <option>CSV</option>
+              <option>Excel</option>
+            </select>
+          </div>
+          <div className="modal-action flex gap-4">
+          <button className="btn btn-primary">Create</button>
+
+            <form method="dialog ">
+              {/* if there is a button, it will close the modal */}
+              <button className="btn">Close</button>
+            </form>
+          </div>
+        </div>
+      </dialog>
+    </div>
+  );
+};
 
 export default Dashboard;
